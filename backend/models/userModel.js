@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "please enter your password"],
     minLength: [8, "your password should have minimum 8 charaters length"],
-    select:false,
+    
   },
   avatar: {
     public_id: {
@@ -46,8 +46,8 @@ userSchema.pre("save", async function (next) {
   this.password = await bcrypt.hash(this.password, 10);
 });
 //JWT token
-userSchema.methods.JWTToken = function () {
-  return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
+userSchema.methods.JWTToken = function () {  
+  return  jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRE,
   });
 };
@@ -66,6 +66,7 @@ userSchema.methods.getResetPasswordToken = function () {
     .update(resetToken)
     .digest("hex");
   this.resetPasswordExpire = Date.now() + 15 * 60 * 1000;
+  
   return resetToken;
 };
 module.exports = mongoose.model("User", userSchema);

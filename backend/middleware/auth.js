@@ -9,7 +9,7 @@ exports.isAuthenticatedUser = catchAsyncError(async (req,res,next)=>{
         return next(new Errorhandler("please login to ascess",401));
     }
     const decodedData = jwt.verify(token,process.env.JWT_SECRET);
-    req.user = await User.findById(decodedData.id);
+    req.user = await User.findById(decodedData.id);    
     next();
 })
 

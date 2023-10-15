@@ -1,6 +1,8 @@
 ///creating tokens and savinh cookies
 const sendToken = (user, statusCode, res) => {
-  const token = user.JWTToken();
+  
+    const token =  user.JWTToken();
+  
   //options for cookie
   const options = {
     expires: new Date(
